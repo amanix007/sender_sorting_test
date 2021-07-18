@@ -1,38 +1,202 @@
-.App {
-  text-align: center;
-}
+@import '~antd/dist/antd.css';
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+$card-max-width: 600px;
+
+$table-concept-max-height: 420px;
+
+$table-background-color: #ffffff;
+$table-hover-background-color: darken($table-background-color, 8%);
+$table-even-background-color: darken($table-background-color, 4%);
+$table-header-color: #ffffff;
+$table-header-background-color: #2f2f2f;
+
+$pagination-background-color: #6f6f6f;
+
+$pagination-label-color: #ffffff;
+$pagination-label-background-color: $pagination-background-color;
+$pagination-label-active-color: #ffffff;
+$pagination-label-active-background-color:
+  darken($pagination-background-color, 15%);
+$pagination-label-disabled-color: #ffffff;
+$pagination-label-disabled-background-color:
+  lighten($pagination-background-color, 15%);
+
+$table-title-color: #ffffff;
+$table-title-background-color: #2f2f2f;
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+
+@mixin button($background-color) {
+  background-color: $background-color;
+  &:hover {
+    background-color: lighten($background-color, 10%);
+  }
+  &:active {
+    background-color: darken($background-color, 10%);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+// body {
+//   font-family: "Open Sans", sans-serif;
+//   background-color: #c0c0c0;
+//   width: 100vw;
+//   height: 100vh;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow: hidden;
+// }
+
+.card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: $card-max-width;
+  box-shadow: 0 15px 35px rgba(#000000, 0.5);
+}
+
+.table-concept {
+  width: 100%;
+  height: 100%;
+  // max-height: $table-concept-max-height;
+  overflow: auto;
+  position: relative;
+  .table-radio {
+    display: none;
+    &:checked + .table-display,
+    &:checked + .table-display + table {
+      display: block;
+    }
+    &:checked + .table-display + table + .pagination {
+      display: flex;
+      & > label.active {
+        color: $pagination-label-active-color;
+        background-color: $pagination-label-active-background-color;
+        cursor: default;
+      }
+      & > label.disabled {
+        color: $pagination-label-disabled-color;
+        background-color: $pagination-label-disabled-background-color;
+        cursor: default;
+      }
+    }
+  }
+  .table-display {
+    background-color: #e2e2e2;
+    text-align: right;
+    padding: 10px;
+    display: none;
+    position: sticky;
+    left: 0;
+  }
+  table {
+    background-color: $table-background-color;
+    font-size: 16px;
+    border-collapse: collapse;
+    tr {
+      &:last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 15px;
+        box-sizing: border-box;
+      }
+      th {
+        color: $table-header-color;
+        background-color: $table-header-background-color;
+        border-bottom: solid 2px #d8d8d8;
+        position: sticky;
+        top: 0;
+      }
+      td {
+        border: solid 1px #d8d8d8;
+        border-left: 0;
+        border-right: 0;
+        white-space: nowrap;
+      }
+    }
+    tbody tr {
+      transition: background-color 150ms ease-out;
+      &:nth-child(2n) {
+        background-color: $table-even-background-color;
+      }
+      &:hover {
+        background-color: $table-hover-background-color;
+      }
+    }
+  }
+  .pagination {
+    background-color: $pagination-background-color;
+    width: 100%;
+    display: none;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    & > label {
+      @include button($pagination-label-background-color);
+      color: $pagination-label-color;
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.table-title {
+  color: $table-title-color;
+  background-color: $table-title-background-color;
+  padding: 15px;
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.button-container {
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  justify-content: flex-end;
+  span {
+    color: #8f8f8f;
+    text-align: right;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
   }
-  to {
-    transform: rotate(360deg);
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 10px;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    border-radius: 0;
+    transition: background-color 225ms ease-out;
+    &.primary {
+      $background-color: #147eff;
+      background-color: $background-color;
+      &:hover {
+        background-color: lighten($background-color, 10%);
+      }
+      &:active {
+        background-color: darken($background-color, 10%);
+      }
+    }
+    &.primary {
+      @include button(#147eff);
+    }
+    &.danger {
+      @include button(#d11800);
+    }
   }
 }
